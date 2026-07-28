@@ -1,0 +1,39 @@
+name: test
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  self-test:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run the action against the fixture
+        id: audit
+        uses: ./
+        with:
+          path: test/fixture
+          name: fixture
+          upload-sarif: "false"
+
+      - name: Assert findings and SARIF output
+        shell: bash
+        run: |
+          set -euo pipefail
+          findings="${{ steps.audit.outputs.findings }}"
+          sarif="${{ steps.audit.outputs.sarif-file }}"
+
+          test "$findings" -ge 3 || { echo "expected >= 3 findings, got $findings"; exit 1; }
+          test -f "$sarif" || { echo "missing SARIF file: $sarif"; exit 1; }
+
+          jq -e '.version == "2.1.0"' "$sarif" > /dev/null
+          results="$(jq -r '.runs[0].results | length' "$sarif")"
+          test "$results" -eq "$findings" || { echo "SARIF results ($results) != findings ($findings)"; exit 1; }
+          jq -e '.runs[0].tool.driver.name == "pqc-readiness-auditor"' "$sarif" > /dev/null
+          echo "OK: $findings findings, $results SARIF results"
