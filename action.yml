@@ -1,5 +1,5 @@
 name: "PQC Readiness Audit"
-description: "Estimate post-quantum (PQC) migration effort for Java code. Flags quantum-vulnerable JCA usage and uploads SARIF to code scanning."
+description: "Estimate post-quantum migration effort for Java code and upload SARIF findings to GitHub code scanning."
 author: "Arpan Sharma"
 
 branding:
