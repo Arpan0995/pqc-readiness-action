@@ -30,7 +30,7 @@ That is the whole setup. Reports (JSON, Markdown, SARIF) land in `audit-out/`, a
 | `path` | `.` | Source root to scan, relative to the workspace. Scan the repository root so code-scanning alerts resolve to files. |
 | `name` | repository name | Codebase label used in the reports. |
 | `output-dir` | `audit-out` | Directory the reports are written to. |
-| `auditor-version` | `1.2.0` | Auditor version to download from Maven Central. 1.1.0 is the earliest version with SARIF output. |
+| `auditor-version` | `1.3.0` | Auditor version to download from Maven Central. 1.1.0 is the earliest version with SARIF output. |
 | `upload-sarif` | `true` | Upload the SARIF report to code scanning. Set to `false` on runners without the `security-events: write` permission (for example fork PRs). |
 
 ## Outputs
