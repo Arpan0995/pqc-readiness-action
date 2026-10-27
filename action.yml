@@ -22,7 +22,7 @@ inputs:
   auditor-version:
     description: "pqc-readiness-auditor version to download from Maven Central. 1.1.0 is the earliest version with SARIF output."
     required: false
-    default: "1.4.0"
+    default: "1.5.0"
   upload-sarif:
     description: "Upload the SARIF report to GitHub code scanning. Requires the security-events: write permission."
     required: false
